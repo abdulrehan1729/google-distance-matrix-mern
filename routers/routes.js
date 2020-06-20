@@ -1,14 +1,18 @@
 const router = require('express').Router()
-router.get('/', (req, res)=>{
- 
+const distance = require('google-distance-matrix');
+
+router.get('/', (req, res) => {
+
     var origins = ['bangalore'];
     var destinations = ['indore'];
-    distance.key('AIzaSyCaYT5yFVEDcb7aAOMme5PN0SLZz8Ulf_g')
-     
+
+    distance.key(process.env.GOOGLE_API_KEY)
+
     distance.matrix(origins, destinations, function (err, distances) {
         if (!err)
             console.log(distances);
-            res.send(distances)
+        res.send(distances)
     })
-    })
-    
+})
+
+module.exports = router;
